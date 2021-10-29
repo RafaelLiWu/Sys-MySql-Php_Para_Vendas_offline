@@ -1,4 +1,4 @@
-# Esse sistema foi criado com PHP, HTML, SASS, MYSql, Javascript(Jquery) e Bootstrap, foi criado apenas como aprendizagem.
+# Esse sistema foi criado com PHP, HTML, SASS->(CSS), MYSql, Javascript(Jquery) e Bootstrap, foi criado apenas como aprendizagem.
 
 # Como funciona?
 Precissa ter um banco de dados chamado loja, com uma tabela produtos ( Nome (Varchar (30)), Quantidade INT, Valor (Double), product_id INT AUTO_INCREMENT )
