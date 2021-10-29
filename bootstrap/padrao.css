@@ -1,0 +1,35 @@
+/* definindo a cor de fundo */
+body {
+  background-image: url("../img/fundo.jpg");
+  font-family: tahoma, "arial black", "Arial Narrow";
+}
+
+/* criando classes com diferentes formatações para um mesmo elemento */
+p.titulo{
+	font-style:italic;
+	font-variant:small-caps;
+	font-weight:bold;
+	font-size:30px;
+	text-align: center;
+	color:rgb(100,255,0);
+}
+
+h1 {
+  font-family: Verdana;
+}
+h2 {
+
+}
+a:link, a:visited, a:active {
+	text-decoration:none;
+}
+a:hover {
+	color:blue; 
+	font-weight:bold;
+	font-size:20px;
+	background:#ADD8E6; 
+}
+img.icones{
+	width: 40px;
+	height: 40px;
+}
