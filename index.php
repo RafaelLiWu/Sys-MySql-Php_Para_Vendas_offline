@@ -38,15 +38,19 @@ $dados = $result->fetchAll();
         $n = 0;
         foreach ($dados as $ids) {
         ?>
-            <p class="aside-products btn-primary" onclick="adicionar(this)">
-                <span nome="<?= $ids['Nome']; ?>" valor="<?= $ids['Valor']; ?>"><?= $ids['Nome']; ?> <?= $ids['Quantidade']; ?></span>
-                <span class="aside-products-more">+</span>
+            <p class="aside-products btn-primary">
+                <span nome="<?= $ids['Nome']; ?>" valor="<?= $ids['Valor']; ?>" quantidade="<?= $ids['Quantidade']; ?>" ><?= $ids['Nome']; ?> <?= $ids['Quantidade']; ?></span>
+                <span class="aside-products-more"><span class="menos btn-danger" onclick="tirar(this)">-</span><span class="mais btn-success" onclick="adicionar(this)">+</span></span>
             </p>
         <?php
             $n++;
         }
         ?>
     </aside>
+
+
+
+
     <div class="areas">
         <header class="header">
             <div class="header-criar btn-success" onclick="createProducts()">
@@ -55,6 +59,7 @@ $dados = $result->fetchAll();
             <div class="header-resultados btn-primary" onclick="TotalDiario()">
                 <span>Total Diário</span>
             </div>
+
             <div class="header-resultados-result">
                 <?php
                 $comandoDiario = "SELECT Nome, Quantidade, Valor FROM dia{$date}";
@@ -63,7 +68,7 @@ $dados = $result->fetchAll();
                 $diario = $result_diario->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($diario as $items) {
                 ?>
-                    <p class="m-0">Produto: <?= $items['Nome']; ?> | Quantidade: <?= $items['Quantidade']; ?> | Valor: <?= $items['Valor']; ?></p>
+                    <p class="m-0 produtosDiarios">Produto: <?= $items['Nome']; ?> | Quantidade: <?= $items['Quantidade']; ?> | Valor: <?= $items['Valor']; ?></p>
                 <?php
                 };
                 ?>
@@ -72,9 +77,18 @@ $dados = $result->fetchAll();
                 $bindTotal = array();
                 $result_total = $c->_Select($comandoTotal, $bindTotal);
                 $total = $result_total->fetch(PDO::FETCH_ASSOC);
+                $english_format_number = number_format($total['Valor'], 2, '.', '');
                 ?>
-                <p class="m-3">Total de Vendas diaria: R$:<?= $total['Valor']; ?></p>
+                <p class="m-3">Total de Vendas diaria: R$:<span id="totaldiario" total="<?= $english_format_number; ?>"><?= $english_format_number; ?><span></p>
+
+                <p align="center">
+                    <button type="button" class="btn btn-primary" id="imprimirdia">Imprimir</button>
+                </p>
             </div>
+
+
+
+
             <div class="header-formulario">
                 <div class="container mx-auto">
                     <form method="POST" class="text-white">
@@ -121,31 +135,57 @@ $dados = $result->fetchAll();
                 ?>
 
             </div>
+
+
+
+
+
+
+            <div class="pesquisar">
+                <div class="pesquisar-mecanismo">
+                    <i class="fas fa-search text-primary" onclick="pesquisar()"></i>
+                    <div class="pesquisar-mecanismo-area">
+                    <input type="text" class="form-control" id="pesquisar-texto">
+                    <button type="button" class="btn btn-primary" id="pesquisar" style="cursor: pointer">Pesquisar</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
         </header>
-                
+
         <div class="painel">
             <div class="painel-area">
                 <form method="POST" action="">
                     <div class="form-group">
                         <label for="produtos">Produtos</label>
-                        <input type="text" id="produtos" name="produtos" class="form-control">
+                        <input type="text" id="produtos" name="produtos" class="form-control" readonly >
                     </div>
                     <div class="form-group">
                         <label for="quantidade">Quantidade</label>
-                        <input type="text" id="quantidade" name="quantidade" class="form-control">
+                        <input type="text" id="quantidade" name="quantidade" class="form-control" readonly >
                     </div>
                     <div class="form-group">
                         <label for="valor">Preço</label>
-                        <input type="text" id="valor" name="valor" class="form-control">
+                        <input type="text" id="valor" name="valor" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="submit" class="btn btn-primary" value="Confirmar" style="cursor: pointer;">
+                                <input type="submit" class="btn btn-primary" value="Confirmar" style="cursor: pointer;" onclick="imprimir()">
                             </div>
                             <div class="col-md-8">
                                 <div class="precototal h-100 w-100">
-                                    <input class="form-control" type="text" name="totalapagar" id="totalapagar" placeholder="Total">
+                                    <input class="form-control imprimir" type="text" name="totalapagar" id="totalapagar" placeholder="Total" readonly>
                                 </div>
                             </div>
                         </div>
@@ -155,13 +195,9 @@ $dados = $result->fetchAll();
         </div>
     </div>
     <?php
-
     $produtos = filter_input(INPUT_POST, "produtos", FILTER_SANITIZE_STRING);
     $quantidade = filter_input(INPUT_POST, "quantidade", FILTER_SANITIZE_STRING);
     $valor = filter_input(INPUT_POST, "valor", FILTER_SANITIZE_STRING);
-
-
-
     if (isset($produtos, $quantidade, $valor) && !empty($produtos) && !empty($quantidade) && !empty($valor)) {
         $produtos_arr = explode(",", $produtos);
         $quantidade_arr = explode(",", $quantidade);
@@ -169,15 +205,14 @@ $dados = $result->fetchAll();
 
         $c->_vendas($produtos_arr, $quantidade_arr, $valor_arr);
     }
-
-
     ?>
 
 
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/createItem.js"></script>
+    <script src="js/pdf.js"></script>
     <script src="js/Compras.js"></script>
-    <script src="js/scriptStyle.js"></script>
+    <script src="js/pesquisar.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 

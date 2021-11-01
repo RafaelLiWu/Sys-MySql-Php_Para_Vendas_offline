@@ -22,6 +22,8 @@ body {
   padding-top: 10px;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  z-index: 99;
+  position: relative;
 }
 .aside-products {
   margin: 3px !important;
@@ -36,7 +38,19 @@ body {
   justify-content: space-between;
 }
 .aside-products-more {
-  font-size: 20px;
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+.aside-products-more span {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 30px;
 }
 
 .header {
@@ -101,7 +115,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(50, 50, 50, 0.4);
+  background-color: rgba(50, 50, 50, 0.8);
 }
 .painel-area {
   width: 500px;
@@ -137,6 +151,40 @@ form {
 .precototal {
   width: 100%;
   height: 100%;
+}
+
+.pesquisar {
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pesquisar-mecanismo {
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 35px;
+  bottom: -100px;
+}
+.pesquisar-mecanismo-area {
+  display: flex;
+  position: relative;
+  top: -100px;
+  transition: 0.4s;
+}
+.pesquisar-mecanismo-area input {
+  margin: 0 5px;
+}
+.pesquisar-mecanismo i {
+  display: block;
+  padding: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+  background-color: white;
+  z-index: 99;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=styles.css.map */
