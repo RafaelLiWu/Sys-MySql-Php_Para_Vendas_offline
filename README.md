@@ -1,4 +1,4 @@
-#Sistema de estoque com vendas, feita com php, mysql, sass, css, javascript, jquery e bootstrap 4.
+Sistema de estoque com vendas e pdf.
 
 Como funciona?
 É necessário que tenha um servidor sql. O banco de dados está configurado em myqsl, port=3306, user="root" sem senha , default.

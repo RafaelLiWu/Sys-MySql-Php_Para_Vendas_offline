@@ -20,7 +20,7 @@ $dados = $result->fetchAll();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0, shrink-to-fit=no">
-    <title>CrIFF</title>
+    <title>Sys</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
